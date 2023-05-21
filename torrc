@@ -1,0 +1,23 @@
+# Tor config for the onion service instance servers
+# ---
+# The instance servers run standard onion services. In Basic mode the
+# control port does not need to be enabled.
+#User debian-tor
+DataDirectory /etc/tor/1/
+
+RunAsDaemon 1
+
+HiddenServiceDir /etc/tor/hidden_service
+HiddenServicePort 80 unix:/etc/tor/nginx1
+HiddenServiceMaxStreams 15
+HiddenServiceMaxStreamsCloseCircuit 1
+HiddenServiceNumIntroductionPoints 3
+HiddenServiceExportCircuitID haproxy
+#HiddenServiceOnionBalanceInstance 1
+
+CookieAuthentication 1
+ControlPort 9051
+ControlPort unix:/etc/tor/c1 WorldWritable RelaxDirModeCheck
+SocksPort unix:/etc/tor/s1 WorldWritable RelaxDirModeCheck
+HashedControlPassword hashedpassword
+HardwareAccel 1 
